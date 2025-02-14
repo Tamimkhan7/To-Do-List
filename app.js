@@ -22,16 +22,22 @@ function showLocalTodo() {
     ).join('');
     inputbox.value = '';
 }
-function updateTodo() {
+function updateTodo(e) {
     let value = e.target.innerText;
     if (value == 'Delete') {
-        let todotext = e.target.parentElement.Children[0].innerText;
-        let todoindex = gettodos.indexof(todotext);
+        let todotext = e.target.parentElement.children[0].innerText;
+        let todoindex = gettodos.indexOf(todotext);
         gettodos.splice(todoindex, 1);
         localStorage.setItem('todo-list', JSON.stringify(gettodos));
         showLocalTodo();
     }
 
+    if (value == 'Edit') {
+        inputbox.value = e.target.previousElementSibling.innerText;
+        addbtn.value = 'Edit';
+        inputbox.focus();//Puts the cursor inside the input box, making it ready for editing.
+        localInput = e;
+    }
 }
 todolist.addEventListener('click', updateTodo);
 window.addEventListener('load', showLocalTodo);
